@@ -24,49 +24,36 @@
     </form>
 
     <script>
-      document
-        .getElementById('contactForm')
-        .addEventListener('submit', function (event) {
-          event.preventDefault();
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var message = document.getElementById('message').value;
 
-          var name = document.getElementById('name').value;
-          var email = document.getElementById('email').value;
-          var message = document.getElementById('message').value;
+      var errors = [];
 
-          if (!name || !email || !message) {
-            document.getElementById('error').textContent =
-              'Please fill in all fields.';
-            return;
-          }
+      if (name == '') {
+        errors.push('Please enter your name.');
+      }
 
-          // You can replace this with your own logic to send the form data to your server.
-          // For example, you could use the Fetch API to send a POST request to your server.
-          fetch('/submit-contact-form', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              name: name,
-              email: email,
-              message: message,
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.success) {
-                document.getElementById('error').textContent =
-                  'Thank you for contacting us!';
-              } else {
-                document.getElementById('error').textContent =
-                  'An error occurred. Please try again later.';
-              }
-            })
-            .catch((error) => {
-              document.getElementById('error').textContent =
-                'An error occurred. Please try again later.';
-            });
-        });
+      if (email == '') {
+        errors.push('Please enter your email.');
+      } else if (!email.includes('@')) {
+        errors.push('Invalid email address.');
+      }
+
+      if (message == '') {
+        errors.push('Please enter a message.');
+      }
+
+      if (errors.length > 0) {
+        var errorHtml = '';
+        for (var i = 0; i < errors.length; i++) {
+          errorHtml += '<li>' + errors[i] + '</li>';
+        }
+        document.getElementById('errors').innerHTML =
+          '<ul>' + errorHtml + '</ul>';
+      } else {
+        alert('Thank you for contacting us!');
+      }
     </script>
 
     <div id="error" class="error"></div>
