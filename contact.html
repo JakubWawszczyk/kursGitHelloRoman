@@ -74,7 +74,6 @@
     <script>
       var name = document.getElementById('name').value;
       var email = document.getElementById('email').value;
-      var message = document.getElementById('message').value;
 
       var errors = [];
 
@@ -86,10 +85,6 @@
         errors.push('Please enter your email.');
       } else if (!email.includes('@')) {
         errors.push('Invalid email address.');
-      }
-
-      if (message == '') {
-        errors.push('Please enter a message.');
       }
 
       if (errors.length > 0) {
